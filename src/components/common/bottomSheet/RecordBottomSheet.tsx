@@ -22,6 +22,11 @@ interface RecordBottomSheetProps {
   onClick: () => void;
 }
 
+/**
+ *
+ * @param onClick - 아이콘 클릭 시 수행하는 함수
+ * @returns
+ */
 export const RecordBottomSheet = ({ onClick }: RecordBottomSheetProps) => {
   return (
     <BottomSheet onClick={onClick}>

@@ -8,6 +8,13 @@ interface ChatBoxProps {
   $isPC: boolean;
 }
 
+/**
+ * 
+ * @param onSubmit - 메세지 입력 시 호출되는 함수
+ * @param isReviewMode - 리뷰 모드 여부
+ * @param $isPC - PC 모드 여부
+ * @returns 
+ */
 export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
   const [message, setMessage] = useState('');
 

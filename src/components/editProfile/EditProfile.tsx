@@ -14,6 +14,17 @@ interface EditProfileProps {
   errorMessage: string;
 }
 
+/**
+ *
+ * @param nickname - nickname
+ * @param onChangeNickname - nickname 변경 시 수행하는 함수
+ * @param select - 선택된 값
+ * @param onChangeSelect - 선택 변경 시 수행하는 함수
+ * @param selectData - 상태 데이터 옵션
+ * @param isError - error의 유무
+ * @param errorMessage - error일 경우 메시지
+ * @returns
+ */
 export const EditProfile = ({
   nickname,
   onChangeNickname,

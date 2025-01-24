@@ -8,6 +8,12 @@ interface SkillListProps {
   setSelectedKeyword: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
+/**
+ *
+ * @param onClick - 클릭 시 수행하는 함수
+ * @param setSelectedKeyword - setSelectedKeyword
+ * @returns
+ */
 export const SkillList = ({ onClick, setSelectedKeyword }: SkillListProps) => {
   const [chartData, setChartData] = useState<SkillData[]>([]);
 

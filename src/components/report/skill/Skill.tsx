@@ -6,6 +6,13 @@ interface SkillProps {
   color?: boolean;
 }
 
+/**
+ *
+ * @param keyword - keyword
+ * @param description - description
+ * @param color - line의 color
+ * @returns
+ */
 export const Skill = ({ keyword, description, color }: SkillProps) => {
   return (
     <S.Skill $color={color}>

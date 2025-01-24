@@ -21,6 +21,13 @@ const EDIT_ITEM = [
   { icon: ChangeIcon, label: '경험 폴더 변경하기', actionKey: 'onClickChange' },
 ];
 
+/**
+ *
+ * @param onClick - 팝업 클릭 시 수행하는 함수
+ * @param onClickDelete - delete 함수
+ * @param onClickChange - change 함수
+ * @returns
+ */
 export const EditPopUp = ({ onClick, onClickDelete, onClickChange }: EditPopUpProps) => {
   const actions: Record<'onClickDelete' | 'onClickChange', () => void> = {
     onClickDelete,

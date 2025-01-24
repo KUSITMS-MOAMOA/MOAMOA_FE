@@ -14,6 +14,13 @@ interface KeywordSkilProps {
   setSelectedKeyword: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
+/**
+ *
+ * @param onClick - 클릭 시 수행하는 함수
+ * @param selectedKeyword - 선택된 키워드 값
+ * @param setSelectedKeyword - setSelectedKeyword
+ * @returns
+ */
 export const KeywordSkill = ({
   onClick,
   selectedKeyword,

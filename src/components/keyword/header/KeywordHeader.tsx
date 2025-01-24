@@ -7,6 +7,13 @@ interface KeywordHeaderProps {
   onClickTabBar: (item: string) => void;
 }
 
+/**
+ *
+ * @param currentTabBar - 현재 TabBar
+ * @param onClickSideBar - SideBar 클릭 시 수행하는 함수
+ * @param onClickTabBar - TabBar 클릭 시 수행하는 함수
+ * @returns
+ */
 export const KeywordHeader = ({
   currentTabBar,
   onClickSideBar,

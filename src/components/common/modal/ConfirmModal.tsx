@@ -10,6 +10,11 @@ interface ConfirmModalProps {
   onClick: () => void;
 }
 
+/**
+ *
+ * @param onClick - 모달 클릭 시 수행하는 함수
+ * @returns
+ */
 export const ConfirmModal = ({ onClick }: ConfirmModalProps) => {
   const navigate = useNavigate();
   const [disabled, setDisabled] = useState(true);

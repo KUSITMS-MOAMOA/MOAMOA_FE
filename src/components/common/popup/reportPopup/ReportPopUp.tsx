@@ -17,6 +17,16 @@ interface ReportPopUpProps {
   hasChanges: boolean;
 }
 
+/**
+ *
+ * @param onClick - 팝업 클릭 시 수행하는 함수
+ * @param onClickstore - 저장 클릭 시 수행하는 함수
+ * @param data - data
+ * @param onChange - textarea의 onChange 함수
+ * @param onAbilityChange - textarea의 abilityChange 함수
+ * @param hasChange - change의 유무
+ * @returns
+ */
 export const ReportPopUp = ({
   onClick,
   onClickStore,

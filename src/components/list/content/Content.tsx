@@ -9,6 +9,12 @@ interface ContentProps {
   onClick: () => void;
 }
 
+/**
+ *
+ * @param listData - listData
+ * @param onClick - 클릭 시 수행하는 함수
+ * @returns
+ */
 export const Content = ({ listData, onClick }: ContentProps) => {
   const navigate = useNavigate();
 

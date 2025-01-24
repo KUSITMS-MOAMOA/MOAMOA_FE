@@ -5,6 +5,11 @@ interface CommentProps {
   comment: string;
 }
 
+/**
+ *
+ * @param comment - comment
+ * @returns
+ */
 export const Comment = ({ comment }: CommentProps) => {
   return (
     <S.Comment>

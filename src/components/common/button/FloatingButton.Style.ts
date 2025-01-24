@@ -14,6 +14,7 @@ export const Button = styled.button`
   box-shadow: 0px 0px 8px 0px rgba(251, 247, 195, 0.6) inset;
   border-radius: 6.1875rem;
   border: none;
+  cursor: pointer;
 
   ${(props) => props.theme.breakpoints.min} {
     display: none;

@@ -18,6 +18,7 @@ export const GuideButton = styled.button`
   max-width: 18.75rem;
   margin-bottom: 0.625rem;
   margin-left: 0.625rem;
+  cursor: pointer;
 `;
 
 export const GuideText = styled.p`

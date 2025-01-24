@@ -10,6 +10,7 @@ export const Header = styled.header`
 export const CloseIcon = styled.img`
   width: 1.125rem;
   height: 1.125rem;
+  cursor: pointer;
 
   ${(props) => props.theme.breakpoints.min} {
     position: absolute;

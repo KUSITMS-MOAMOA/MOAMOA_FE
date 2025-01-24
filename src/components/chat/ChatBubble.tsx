@@ -9,6 +9,14 @@ interface ChatBubbleProps {
   $isPC?: boolean;
 }
 
+/**
+ * 
+ * @param message - 표시할 메세지
+ * @param isMe - 유저 여부
+ * @param isLoading - 로딩 여부
+ * @param $isPC - PC 여부
+ * @returns 
+ */
 export const ChatBubble = ({ message, isMe, isLoading, $isPC }: ChatBubbleProps) => {
   return (
     <S.ChatBubbleWrapper $isMe={isMe} $isPC={$isPC}>

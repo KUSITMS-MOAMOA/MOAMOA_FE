@@ -45,4 +45,5 @@ export const ChatBoxButton = styled.button<{ $hasMessage: boolean }>`
   padding: 0.5rem 0.483rem;
   background-color: ${({ $hasMessage }) => ($hasMessage ? Colors.gray700 : Colors.gray100)};
   transition: background-color 0.2s ease;
+  cursor: pointer;
 `;

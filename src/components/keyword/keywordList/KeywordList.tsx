@@ -9,6 +9,15 @@ interface KeywordListProps {
   onClick: () => void;
 }
 
+/**
+ *
+ * @param chip - chip
+ * @param title - title
+ * @param description - description
+ * @param date - date
+ * @param onClick - 클릭 시 수행하는 함수
+ * @returns
+ */
 export const KeywordList = ({ chip, title, description, date, onClick }: KeywordListProps) => {
   return (
     <S.KeywordList onClick={onClick}>
