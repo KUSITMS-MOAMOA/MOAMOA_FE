@@ -5,6 +5,10 @@ import { GlobalStyle } from './styles/global';
 import { theme } from './styles/theme';
 import { SideBarItem } from './components/common/sideBar/SideBarItem';
 import * as S from './App.Style';
+import ReactGA from 'react-ga';
+
+const gaTrackingId = import.meta.env.VITE_APP_GA_TRACKING_ID;
+ReactGA.initialize(gaTrackingId, { debug: true });
 
 export const App = () => {
   const navigate = useNavigate();
@@ -12,6 +16,10 @@ export const App = () => {
   const hideSideBarPath = ['/oauth', '/login', '/register', '/login-success', '/chat/:id', '/review-chat/:id', '/404']; // router 확정되면 추후 수정
 
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    ReactGA.pageview(location.pathname);
+  }, [location.pathname]);
 
   useEffect(() => {
     const unprotectedPaths = ['/oauth', '/login', '/register', '/login-success'];
