@@ -3,7 +3,7 @@ import * as S from './OauthPage.Style';
 
 export const OauthPage = () => {
   const handleOauth = () => {
-    window.location.href = 'https://api.corecord.site/oauth2/authorization/kakao';
+    window.location.href = 'https://api.moamoa.site/oauth2/authorization/kakao';
   };
 
   return (
