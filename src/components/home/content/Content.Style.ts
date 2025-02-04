@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const Content = styled.div`
   width: 100%;
-  height: calc(100vh - 14.5rem);
+  height: calc(100vh - 13em);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
