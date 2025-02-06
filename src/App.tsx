@@ -5,10 +5,7 @@ import { GlobalStyle } from './styles/global';
 import { theme } from './styles/theme';
 import { SideBarItem } from './components/common/sideBar/SideBarItem';
 import * as S from './App.Style';
-import ReactGA from 'react-ga';
-
-const gaTrackingId = import.meta.env.VITE_APP_GA_TRACKING_ID;
-ReactGA.initialize(gaTrackingId, { debug: true });
+import { initializeGA, trackPageView } from './utils/ga';
 
 export const App = () => {
   const navigate = useNavigate();
@@ -18,7 +15,11 @@ export const App = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    ReactGA.pageview(location.pathname);
+    initializeGA();
+  }, []);
+
+  useEffect(() => {
+    trackPageView(location.pathname);
   }, [location.pathname]);
 
   useEffect(() => {
