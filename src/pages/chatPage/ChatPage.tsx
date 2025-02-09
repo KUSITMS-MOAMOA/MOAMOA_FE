@@ -10,7 +10,15 @@ import * as S from './ChatPage.Style';
 import ToastMessage from '@/components/chat/ToastMessage';
 import { LoadingDots } from '@components/chat/LodingDots';
 import { LoadingScreen } from '@components/common/loading/LoadingScreen';
-import { postAiChat, postTmpChat, checkTmpChat, getChat, getSummary, deleteChat, postChat } from '@/api/Chat';
+import {
+  postAiChat,
+  postTmpChat,
+  checkTmpChat,
+  getChat,
+  getSummary,
+  deleteChat,
+  postChat,
+} from '@/api/Chat';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { AxiosError } from 'axios';
 import { useValidatePathId } from '@/hooks/useValidatePathId';
@@ -52,7 +60,8 @@ export const ChatPage = () => {
   };
 
   useEffect(() => {
-    if (messages.length > 1) { // 배포 후 모바일에서 확인 필요
+    if (messages.length > 1) {
+      // 배포 후 모바일에서 확인 필요
       scrollToBottom();
     }
   }, [messages]);
@@ -71,51 +80,59 @@ export const ChatPage = () => {
           setIsLoadTempModalOpen(true);
         }
       } catch (error) {
-        console.error("임시 저장된 기록을 조회하는 중 오류가 발생했습니다:", error);
+        console.error('임시 저장된 기록을 조회하는 중 오류가 발생했습니다:', error);
       }
     };
 
     fetchTmpChatData();
   }, [id, isReviewMode]);
 
-  const fetchChatHistory = useCallback(async (chatRoomId: number | null) => {
-    try {
-      if (!chatRoomId) {
-        throw new Error('유효하지 않은 채팅방 ID입니다.');
-      }
+  const fetchChatHistory = useCallback(
+    async (chatRoomId: number | null) => {
+      try {
+        if (!chatRoomId) {
+          throw new Error('유효하지 않은 채팅방 ID입니다.');
+        }
 
-      if (window.location.pathname.startsWith('/review-chat')) {
-        setShowGuideButton(false);
-      }
-      const response = await getChat(chatRoomId);
+        if (window.location.pathname.startsWith('/review-chat')) {
+          setShowGuideButton(false);
+        }
+        const response = await getChat(chatRoomId);
 
-      if (response?.chats && response.chats.length > 0) {  // 채팅 기록이 있는 경우만 체크
-        // 채팅 기록이 있는 경우
-        const chatHistory = response.chats.map(chat => ({
-          message: chat.content,
-          isMe: (chat.author === 'user') ? true : false,
-          isLoading: false
-        }));
-        setMessages(chatHistory);
-      } else {
-        // 채팅 기록이 없는 경우
-        setMessages([{
-          message: formattedFirstChat,
-          isMe: false,
-          isLoading: false,
-        }]);
-        setShowGuideButton(true);  // 채팅 기록이 없으면 가이드 버튼 보이기
+        if (response?.chats && response.chats.length > 0) {
+          // 채팅 기록이 있는 경우만 체크
+          // 채팅 기록이 있는 경우
+          const chatHistory = response.chats.map((chat) => ({
+            message: chat.content,
+            isMe: chat.author === 'user' ? true : false,
+            isLoading: false,
+          }));
+          setMessages(chatHistory);
+        } else {
+          // 채팅 기록이 없는 경우
+          setMessages([
+            {
+              message: formattedFirstChat,
+              isMe: false,
+              isLoading: false,
+            },
+          ]);
+          setShowGuideButton(true); // 채팅 기록이 없으면 가이드 버튼 보이기
+        }
+      } catch {
+        // 에러 발생 시 기본 메시지 표시
+        setMessages([
+          {
+            message: formattedFirstChat,
+            isMe: false,
+            isLoading: false,
+          },
+        ]);
+        setShowGuideButton(true);
       }
-    } catch {
-      // 에러 발생 시 기본 메시지 표시
-      setMessages([{
-        message: formattedFirstChat,
-        isMe: false,
-        isLoading: false,
-      }]);
-      setShowGuideButton(true);
-    }
-  }, [formattedFirstChat]);
+    },
+    [formattedFirstChat],
+  );
 
   // 채팅 기록 조회
   useEffect(() => {
@@ -132,21 +149,21 @@ export const ChatPage = () => {
 
     try {
       setShowGuideButton(false);
-      setMessages(prev => [...prev, { message, isMe: true, isLoading: false }]);
-      setMessages(prev => [...prev, { message: '', isMe: false, isLoading: true }]);
+      setMessages((prev) => [...prev, { message, isMe: true, isLoading: false }]);
+      setMessages((prev) => [...prev, { message: '', isMe: false, isLoading: true }]);
 
       // 가이드가 아닌 일반 메시지 요청
       const response = await postAiChat(chatRoomId, { content: message });
       const aiResponse = response?.chats?.[0]?.content || '응답을 불러오지 못했습니다.';
 
-      setMessages(prev => [
+      setMessages((prev) => [
         ...prev.slice(0, -1),
-        { message: aiResponse, isMe: false, isLoading: false }
+        { message: aiResponse, isMe: false, isLoading: false },
       ]);
     } catch {
-      setMessages(prev => [
+      setMessages((prev) => [
         ...prev.slice(0, -1),
-        { message: '메시지 전송에 실패했습니다.', isMe: false, isLoading: false }
+        { message: '메시지 전송에 실패했습니다.', isMe: false, isLoading: false },
       ]);
     }
   };
@@ -157,31 +174,32 @@ export const ChatPage = () => {
     try {
       setShowGuideButton(false);
 
-      setMessages(prev => [...prev, { message: '어떤 경험을 말해야 할지 모르겠어요.', isMe: true, isLoading: false }]);
-      setMessages(prev => [...prev, { message: '', isMe: false, isLoading: true }]);
+      setMessages((prev) => [
+        ...prev,
+        { message: '어떤 경험을 말해야 할지 모르겠어요.', isMe: true, isLoading: false },
+      ]);
+      setMessages((prev) => [...prev, { message: '', isMe: false, isLoading: true }]);
       const response = await postAiChat(chatRoomId, { guide: true, content: '' });
-      const guideResponse = response?.chats?.map((chat: { content: string }) => chat.content).join('<br>') || '가이드 응답을 불러오지 못했습니다.';
+      const guideResponse =
+        response?.chats?.map((chat: { content: string }) => chat.content).join('<br>') ||
+        '가이드 응답을 불러오지 못했습니다.';
 
       const [firstPart, secondPart] = guideResponse.split('<br>');
 
       setTimeout(() => {
-        setMessages(prev => [
+        setMessages((prev) => [
           ...prev.slice(0, -1),
-          { message: firstPart, isMe: false, isLoading: false }
+          { message: firstPart, isMe: false, isLoading: false },
         ]);
 
         setTimeout(() => {
-          setMessages(prev => [
-            ...prev,
-            { message: secondPart, isMe: false, isLoading: false }
-          ]);
+          setMessages((prev) => [...prev, { message: secondPart, isMe: false, isLoading: false }]);
         }, 800);
       }, 400);
-
     } catch {
-      setMessages(prev => [
+      setMessages((prev) => [
         ...prev.slice(0, -1),
-        { message: '가이드 요청에 실패했습니다.', isMe: false, isLoading: false }
+        { message: '가이드 요청에 실패했습니다.', isMe: false, isLoading: false },
       ]);
     }
   };
@@ -207,7 +225,12 @@ export const ChatPage = () => {
       // 기존 임시저장 채팅이 있는지 확인
       const tmpChatData = await checkTmpChat();
       // 기존 임시저장 채팅이 있고, 현재 채팅방과 다른 경우 삭제
-      if (tmpChatData.exist && tmpChatData.chatRoomId && typeof tmpChatData.chatRoomId === 'number' && tmpChatData.chatRoomId !== chatRoomId) {
+      if (
+        tmpChatData.exist &&
+        tmpChatData.chatRoomId &&
+        typeof tmpChatData.chatRoomId === 'number' &&
+        tmpChatData.chatRoomId !== chatRoomId
+      ) {
         await deleteChat(tmpChatData.chatRoomId);
       }
       // 현재 채팅 임시저장
@@ -289,11 +312,13 @@ export const ChatPage = () => {
     }
     setIsLoadTempModalOpen(false);
     // 새로 작성하기를 선택한 경우 기본 메시지로 초기화
-    setMessages([{
-      message: formattedFirstChat,
-      isMe: false,
-      isLoading: false,
-    }]);
+    setMessages([
+      {
+        message: formattedFirstChat,
+        isMe: false,
+        isLoading: false,
+      },
+    ]);
     setShowGuideButton(true);
   }, [chatRoomId, formattedFirstChat]);
 
@@ -314,7 +339,7 @@ export const ChatPage = () => {
       setChatRoomId(tmpChatRoomId); // 현재 채팅방 ID 업데이트
       await fetchChatHistory(tmpChatRoomId);
     }
-  }
+  };
 
   const currentDate = new Date().toISOString().split('T')[0].replace(/-/g, '.');
 
@@ -324,7 +349,13 @@ export const ChatPage = () => {
         <LoadingScreen labelText="AI 채팅 내용을 요약하고 있어요" />
       ) : (
         <>
-          <TabBar rightText={isReviewMode ? "" : "완료하기"} onClickBackIcon={handleTemporarySave} onClick={() => setIsModalOpen(true)} isDisabled={messages.length === 0} />
+          <TabBar
+            rightText={isReviewMode ? '' : '완료하기'}
+            onClickBackIcon={handleTemporarySave}
+            onClick={() => setIsModalOpen(true)}
+            isDisabled={messages.length === 0}
+            isChat={true}
+          />
           {isModalOpen && !isError && (
             <DetailModal
               text="기록을 완료할까요?"
@@ -356,7 +387,9 @@ export const ChatPage = () => {
             />
           )}
 
-          {showToast && <ToastMessage text="경험이 임시저장 되었어요" onClose={() => setShowToast(false)} />}
+          {showToast && (
+            <ToastMessage text="경험이 임시저장 되었어요" onClose={() => setShowToast(false)} />
+          )}
 
           <S.ChatContainer $isPC={isPC}>
             <S.ContentContainer>
@@ -372,7 +405,12 @@ export const ChatPage = () => {
               ))}
               <div ref={messagesEndRef} />
               <S.InputContainer $isPC={isPC}>
-                {showGuideButton && <GuideButton text="🤔 경험을 어떻게 말해야 할지 모르겠어요" onClick={handleGuideButtonClick} />}
+                {showGuideButton && (
+                  <GuideButton
+                    text="🤔 경험을 어떻게 말해야 할지 모르겠어요"
+                    onClick={handleGuideButtonClick}
+                  />
+                )}
                 <ChatBox onSubmit={handleSendMessage} isReviewMode={isReviewMode} $isPC={isPC} />
               </S.InputContainer>
             </S.ContentContainer>
@@ -381,4 +419,4 @@ export const ChatPage = () => {
       )}
     </>
   );
-}
+};

@@ -1,8 +1,9 @@
 import { Colors } from '@/styles/colors';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface TextProps {
   $isDisabled?: boolean;
+  $isChat?: boolean;
 }
 
 export const TabBar = styled.nav`
@@ -42,7 +43,15 @@ export const CenterText = styled.h6`
 export const Text = styled.p<TextProps>`
   font-size: 0.875rem;
   line-height: 145%;
-  color: ${({ $isDisabled }) => ($isDisabled ? Colors.gray300 : Colors.gray700)};
+  color: ${({ $isDisabled, $isChat }) =>
+    $isDisabled ? Colors.gray300 : $isChat ? '#F05561' : Colors.gray700};
+  ${({ $isChat }) =>
+    $isChat &&
+    css`
+      padding: 0.25rem 0.625rem;
+      background-color: #fdeaec;
+      border-radius: 0.5rem;
+    `}
   cursor: pointer;
 `;
 
