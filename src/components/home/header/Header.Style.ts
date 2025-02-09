@@ -5,7 +5,7 @@ export const Header = styled.header`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 14.5rem;
+  height: 13rem;
   padding: 0 1.25rem 1.25rem;
   color: ${Colors.gray900};
   background-image: url('/images/HomeImage.png');
