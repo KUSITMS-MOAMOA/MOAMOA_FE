@@ -13,6 +13,7 @@ interface TabBarProps {
   isDisabled?: boolean;
   isEditable?: boolean;
   onClickEditIcon?: () => void;
+  isChat?: boolean;
 }
 /**
  *
@@ -24,6 +25,7 @@ interface TabBarProps {
  * @param isDisabled - (optional) rightText를 클릭 시 수행하는 함수, 전달되지 않을 경우 이전 페이지로 이동하는 함수 수행
  * @param isEditable - (optional) 편집 아이콘의 유무
  * @param onClickEditIcon - (optional) 편집 아이콘 클릭 시 수행하는 함수
+ * @param isChat - (optional) chatPage의 유무무
  * @returns
  */
 export const TabBar = ({
@@ -35,6 +37,7 @@ export const TabBar = ({
   isDisabled,
   isEditable,
   onClickEditIcon,
+  isChat,
 }: TabBarProps) => {
   const navigate = useNavigate();
 
@@ -52,7 +55,7 @@ export const TabBar = ({
       {leftText && <S.LeftText>{leftText}</S.LeftText>}
       {centerText && <S.CenterText>{centerText}</S.CenterText>}
       {rightText && (
-        <S.Text onClick={onClick} $isDisabled={isDisabled}>
+        <S.Text onClick={onClick} $isDisabled={isDisabled} $isChat={isChat}>
           {rightText}
         </S.Text>
       )}
