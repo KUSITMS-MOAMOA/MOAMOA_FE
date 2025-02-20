@@ -53,6 +53,6 @@
     "**/*.test.ts",
     "**/*.test.tsx",
     "svg.d.ts",
-    "service-worker.js",
+    "public/service-worker.js",
   ]
 }

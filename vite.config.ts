@@ -13,44 +13,11 @@ export default defineConfig({
     VitePWA({
       injectRegister: 'auto',
       registerType: 'autoUpdate',
-      manifest: {
-        name: 'moamoa',
-        short_name: 'moamoa',
-        description: 'moamoa Progressive Web App',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
-        display: 'standalone',
-        start_url: '/',
-        icons: [
-          {
-            src: '/images/Moamoa-128x128.png',
-            sizes: '128x128',
-            type: 'image/png',
-          },
-          {
-            src: '/images/Moamoa-152x152.png',
-            sizes: '152x152',
-            type: 'image/png',
-          },
-          {
-            src: '/images/Moamoa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: '/images/Moamoa-256x256.png',
-            sizes: '256x256',
-            type: 'image/png',
-          },
-          {
-            src: '/images/Moamoa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-        ]
-      },
+      includeAssets: ['**/*'],
+      manifest: false,
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+        globPatterns: ['**/*.{js,css,html,png,svg,ico,json}'],
+        maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
       }
     })
   ],
