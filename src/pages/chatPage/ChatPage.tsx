@@ -176,7 +176,7 @@ export const ChatPage = () => {
 
       setMessages((prev) => [
         ...prev,
-        { message: '어떤 경험을 말해야 할지 모르겠어요.', isMe: true, isLoading: false },
+        { message: '🤔 경험정리 방법이 궁금해요.', isMe: true, isLoading: false },
       ]);
       setMessages((prev) => [...prev, { message: '', isMe: false, isLoading: true }]);
       const response = await postAiChat(chatRoomId, { guide: true, content: '' });
@@ -407,7 +407,7 @@ export const ChatPage = () => {
               <S.InputContainer $isPC={isPC}>
                 {showGuideButton && (
                   <GuideButton
-                    text="🤔 경험을 어떻게 말해야 할지 모르겠어요"
+                    text="🤔 경험정리 방법이 궁금해요"
                     onClick={handleGuideButtonClick}
                   />
                 )}
