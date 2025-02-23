@@ -23,7 +23,7 @@ export const ChipContainer = styled.div`
   margin-bottom: 0.375rem;
 `;
 
-export const Title = styled.h4`
+export const Title = styled.h5`
   line-height: 140%;
   overflow: hidden;
   display: -webkit-box;
@@ -40,4 +40,9 @@ export const Title = styled.h4`
 export const DateText = styled.p`
   font-size: 0.8125rem;
   line-height: 145%;
+`;
+
+export const bottomContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;

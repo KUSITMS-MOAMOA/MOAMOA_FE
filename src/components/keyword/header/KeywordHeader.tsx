@@ -25,7 +25,8 @@ export const KeywordHeader = ({
     <S.Header>
       <Header onClick={onClickSideBar} />
       <S.Content>
-        {nickname}님의 경험을 <br /> 키워드로 모아봤어요
+        {nickname}님의 경험의 역량 키워드
+        <S.Description>경험을 역량 키워드로 모아볼 수 있어요</S.Description>
       </S.Content>
       <S.TabBar>
         <S.Item

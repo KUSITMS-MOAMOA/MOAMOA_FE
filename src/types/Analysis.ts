@@ -16,15 +16,6 @@ export interface SkillProps {
   createdAt: string;
 }
 
-export interface KeywordSkillProps {
-  analysisId: number;
-  recordId: number;
-  folder: string;
-  title: string;
-  content: string;
-  createdAt: string;
-}
-
 export interface AnalysisProps {
   analysisId: number;
   title?: string;

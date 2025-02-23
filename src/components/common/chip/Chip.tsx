@@ -9,7 +9,7 @@ interface ChipProps {
 /**
  *
  * @param children - chip에 들어갈 글씨
- * @param color - (optional) true일 경우 노란색
+ * @param color - (optional) true일 경우 회색
  * @param size - chip의 크기
  * @returns
  */
