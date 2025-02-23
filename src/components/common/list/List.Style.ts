@@ -41,3 +41,8 @@ export const DateText = styled.p`
   font-size: 0.8125rem;
   line-height: 145%;
 `;
+
+export const bottomContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

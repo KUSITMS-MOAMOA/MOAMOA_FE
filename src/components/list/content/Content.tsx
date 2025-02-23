@@ -18,6 +18,7 @@ interface ContentProps {
 export const Content = ({ listData, onClick }: ContentProps) => {
   const navigate = useNavigate();
 
+  console.log(listData);
   return (
     <>
       {listData.length > 0 ? (
@@ -27,6 +28,7 @@ export const Content = ({ listData, onClick }: ContentProps) => {
             title={item.title}
             chips={item.keywordList}
             date={item.createdAt}
+            folder={item.folder}
             onClick={() => {
               navigate(`/report/${item.analysisId}`);
             }}

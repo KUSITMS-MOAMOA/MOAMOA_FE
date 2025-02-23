@@ -2,11 +2,12 @@ import { CategoryChip } from '@/components/common/chip/CategoryChip';
 import * as S from './KeywordSkill.style';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { KeywordList } from '../keywordList/KeywordList';
+//import { KeywordList } from '../keywordList/KeywordList';
 import { Empty } from '@/components/common/empty/Empty';
-import { KeywordSkillProps } from '@/types/Analysis';
 import { getKeywordList, getRecords } from '@/api/Analysis';
 import { FloatingButton } from '@/components/common/button/FloatingButton';
+import { ListProps } from '@/types/Folder';
+import { List } from '@/components/common/list/List';
 
 interface KeywordSkilProps {
   onClick: () => void;
@@ -28,7 +29,7 @@ export const KeywordSkill = ({
 }: KeywordSkilProps) => {
   const navigate = useNavigate();
   const [keywordList, setKeywordList] = useState<string[]>([]);
-  const [recordList, setRecordList] = useState<KeywordSkillProps[]>([]);
+  const [recordList, setRecordList] = useState<ListProps[]>([]);
   const [lastRecordId, setLastRecordId] = useState(0);
   const [hasNext, setHasNext] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -143,12 +144,12 @@ export const KeywordSkill = ({
       {recordList.length > 0 ? (
         <S.KeywordListContainer>
           {recordList.map((item) => (
-            <KeywordList
+            <List
               key={item.analysisId}
-              chip={item.folder}
               title={item.title}
-              description={item.content}
+              chips={item.keywordList}
               date={item.createdAt}
+              folder={item.folder}
               onClick={() => {
                 navigate(`/report/${item.analysisId}`);
               }}
