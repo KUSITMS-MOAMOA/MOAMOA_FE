@@ -52,7 +52,7 @@ export const ReportPage = () => {
             ),
           });
 
-          if (skillData.data.recordType === 'CHAT' && [1, 5, 10].includes(skillData.chatRecordCount)) {
+          if (skillData.recordType === 'CHAT' && [1, 5, 10].includes(skillData.chatRecordCount)) {
             setShowFeedbackModal(true);
           }
         }
