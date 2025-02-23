@@ -23,7 +23,7 @@ export const ChipContainer = styled.div`
   margin-bottom: 0.375rem;
 `;
 
-export const Title = styled.h4`
+export const Title = styled.h5`
   line-height: 140%;
   overflow: hidden;
   display: -webkit-box;
