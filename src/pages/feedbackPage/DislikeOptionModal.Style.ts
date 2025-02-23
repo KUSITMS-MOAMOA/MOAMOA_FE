@@ -23,7 +23,7 @@ export const TextContainer = styled.div`
 `
 
 export const Title = styled.p`
-  font-size: 14px;
+  font-size: 0.875rem;
   color: ${Colors.blue400};
   text-align: left;
   margin-bottom: 0.5rem;
@@ -52,8 +52,8 @@ export const OptionWrapper = styled.div`
 
 export const OptionInput = styled.input.attrs({ type: "radio" })`
   appearance: none;
-  width: 15px;
-  height: 15px;
+  width: 0.9375rem;
+  height: 0.9375rem;
   border-radius: 50%;
   border: 2px solid #ccc;
   background-color: #fff;
@@ -66,16 +66,16 @@ export const OptionInput = styled.input.attrs({ type: "radio" })`
 `;
 
 export const OptionLabel = styled.label`
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: ${Colors.gray800};
 `;
 
 export const FeedbackTextArea = styled.textarea`
-  width: 250px;
-  height: 84px;
-  padding: 10px;
-  font-size: 12px;
-  border-radius: 8px;
+  width: 15.625rem;
+  height: 5.25rem;
+  padding: 0.625rem;
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
   background-color: ${Colors.gray25};
   outline: none;
   
@@ -87,5 +87,5 @@ export const FeedbackTextArea = styled.textarea`
 export const FeedbackTextAreaWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.75rem;
 `;
