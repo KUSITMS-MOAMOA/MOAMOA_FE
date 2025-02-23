@@ -8,9 +8,12 @@ import { DislikeOptionModal } from './DislikeOptionModal'
 
 interface SelectDislikeModalProps {
   onClose: () => void;
+  parentClose?: () => void;
+  recordId: number;
+  satisfaction: 'GOOD' | 'BAD';
 }
 
-export const SelectDislikeModal = ({ onClose }: SelectDislikeModalProps) => {
+export const SelectDislikeModal = ({ onClose, parentClose, recordId, satisfaction }: SelectDislikeModalProps) => {
   const [selectedFeedbackType, setSelectedFeedbackType] = useState<'CHAT' | 'ANALYSIS' | null>(null);
   const [dislikeOptionModal, setDislikeOptionModal] = useState(false);
 
@@ -18,8 +21,13 @@ export const SelectDislikeModal = ({ onClose }: SelectDislikeModalProps) => {
     onClose();
   };
 
+  const closeAllModals = () => {
+    onClose();
+    parentClose?.();
+  };
+
   const handleLeftClick = () => {
-    setSelectedFeedbackType("CHAT")
+    setSelectedFeedbackType("CHAT");
     setDislikeOptionModal(true);
   };
 
@@ -49,10 +57,12 @@ export const SelectDislikeModal = ({ onClose }: SelectDislikeModalProps) => {
       </S.Content>
       {dislikeOptionModal && selectedFeedbackType && (
         <DislikeOptionModal
-          onClose={() => setDislikeOptionModal(false)}
+          closeAllModals={closeAllModals}
           feedbackType={selectedFeedbackType}
+          recordId={recordId}
+          satisfaction={satisfaction}
         />
       )}
     </Modal>
-  )
+  );
 };

@@ -16,10 +16,10 @@ interface FeedbackModalProps {
 export const FeedbackModal = ({ onClose, recordId }: FeedbackModalProps) => {
   const navigate = useNavigate();
   const [selectDislikeModal, setSelectDislikeModal] = useState(false);
-  const [satisfaction, setSatisfaction] = useState<string | null>(null);
+  const [satisfaction, setSatisfaction] = useState<'GOOD' | 'BAD' | null>(null);
 
   const handleClose = () => {
-    onClose(); // 모달 닫기
+    onClose();
   };
 
   const handleLeftClick = async () => {
@@ -42,8 +42,8 @@ export const FeedbackModal = ({ onClose, recordId }: FeedbackModalProps) => {
         <S.Icon src={CloseIcon} alt="close" onClick={handleClose} />
         <S.Image src={FeedbackIcon} alt="feedback" />
         <S.Text>
-          {`모아모아가 정리한 경험,\n
-          어떠셨나요?`}
+          {`모아모아가 정리한 경험,
+          \n어떠셨나요?`}
         </S.Text>
         <S.ButtonContainer>
           <S.StyledButton styleType="popupLeft" onClick={handleLeftClick}>
@@ -54,9 +54,10 @@ export const FeedbackModal = ({ onClose, recordId }: FeedbackModalProps) => {
           </Button>
         </S.ButtonContainer>
       </S.Content>
-      {selectDislikeModal && (
+      {selectDislikeModal && satisfaction && (
         <SelectDislikeModal
           onClose={() => setSelectDislikeModal(false)}
+          parentClose={onClose}
           recordId={recordId}
           satisfaction={satisfaction}
         />
