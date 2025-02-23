@@ -29,6 +29,13 @@ export const Content = styled.div`
   }
 `;
 
+export const Description = styled.p`
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 135%;
+  margin-top: 0.4375rem;
+`;
+
 export const TabBar = styled.div`
   display: flex;
   margin-top: 1rem;
