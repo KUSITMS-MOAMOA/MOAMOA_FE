@@ -72,7 +72,8 @@ export const RecordCompletePage = () => {
           chatRoomId: state.chatRoomId,
         });
         if (response?.is_success) {
-          navigate('/home');
+          const id = response.data.analysisDto.analysisId;
+          navigate(`/report/${id}`);
           return true;
         }
       } catch (error) {
@@ -91,7 +92,8 @@ export const RecordCompletePage = () => {
               chatRoomId: state.chatRoomId,
             });
             if (retryResponse?.is_success) {
-              navigate('/home');
+              const id = retryResponse.data.analysisDto.analysisId;
+              navigate(`/report/${id}`);
               return;
             }
             break;

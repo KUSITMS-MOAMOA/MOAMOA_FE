@@ -170,9 +170,9 @@ export const MemoPage = () => {
       });
 
       if (response) {
-        console.log('postRecord 첫 번째 요청 성공');
+        const id = response.data.analysisDto.analysisId;
         clearTempMemo();
-        navigate('/');
+        navigate(`/report/${id}`);
       }
       if (!tempMemo.memo) {
         alert('내용을 입력해주세요.');
@@ -196,9 +196,10 @@ export const MemoPage = () => {
               recordType: 'MEMO',
             });
             if (retryResponse) {
+              const id = retryResponse.data.analysisDto.analysisId;
               console.log('postRecord 재요청 성공');
               clearTempMemo();
-              navigate('/');
+              navigate(`/report/${id}`);
             }
             break;
           }

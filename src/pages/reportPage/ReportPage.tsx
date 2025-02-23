@@ -13,6 +13,7 @@ import KebabIcon from '@icons/KebabIcon.svg';
 import * as S from './ReportPage.Style';
 import ToastMessage from '@/components/chat/ToastMessage';
 import { useValidatePathId } from '@/hooks/useValidatePathId';
+import { FeedbackModal } from '@/pages/feedbackPage/FeedbackModal';
 
 export const ReportPage = () => {
   const { id } = useParams<{ id?: string }>();
@@ -24,6 +25,7 @@ export const ReportPage = () => {
   const [openChangeBottom, setOpenChangeBottom] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -49,6 +51,10 @@ export const ReportPage = () => {
               {},
             ),
           });
+
+          if (skillData.data.recordType === 'CHAT' && [1, 5, 10].includes(skillData.chatRecordCount)) {
+            setShowFeedbackModal(true);
+          }
         }
       }
     };
@@ -126,6 +132,10 @@ export const ReportPage = () => {
     setShowToast((prev) => !prev);
   };
 
+  const handleCloseFeedbackModal = () => {
+    setShowFeedbackModal(false);
+  };
+
   return (
     <>
       <S.MobileHeader>
@@ -178,6 +188,9 @@ export const ReportPage = () => {
           intialfolderName={data.folderName}
           showToast={toggleShowToast}
         />
+      )}
+      {showFeedbackModal && data && (
+        <FeedbackModal onClose={handleCloseFeedbackModal} recordId={data.recordId} />
       )}
       {showToast && <ToastMessage text="변경 내용이 저장되었어요! " onClose={toggleShowToast} />}
     </>
