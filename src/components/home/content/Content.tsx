@@ -9,6 +9,7 @@ interface LISTPROPS {
   title: string;
   keywordList: string[];
   createdAt: string;
+  folder: string;
   analysisId: number;
 }
 export const Content = () => {
@@ -20,6 +21,7 @@ export const Content = () => {
       const data = await getRecords();
       if (data) {
         setListData(data);
+        console.log(listData);
       }
     };
     fetchData();
@@ -45,6 +47,7 @@ export const Content = () => {
             <List
               key={index}
               title={item.title}
+              folder={item.folder}
               chips={item.keywordList}
               date={item.createdAt}
               onClick={() => {
