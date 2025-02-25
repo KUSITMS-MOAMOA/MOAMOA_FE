@@ -7,6 +7,7 @@ import { Button } from '../../components/common/button/Button';
 import CloseIcon from '@icons/CloseIcon.svg';
 import FeedbackIcon from '@icons/FeedbackIcon.svg';
 import { submitFeedback } from '@/api/Feedback';
+import ToastMessage from '@/components/chat/ToastMessage';
 
 interface FeedbackModalProps {
   onClose: () => void;
@@ -17,7 +18,7 @@ export const FeedbackModal = ({ onClose, recordId }: FeedbackModalProps) => {
   const navigate = useNavigate();
   const [selectDislikeModal, setSelectDislikeModal] = useState(false);
   const [satisfaction, setSatisfaction] = useState<'GOOD' | 'BAD' | null>(null);
-
+  const [isToastVisible, setIsToastVisible] = useState(false);
   const handleClose = () => {
     onClose();
   };
@@ -30,7 +31,10 @@ export const FeedbackModal = ({ onClose, recordId }: FeedbackModalProps) => {
   const handleRightClick = async () => {
     try {
       await submitFeedback({ recordId, satisfaction: "GOOD" })
-      navigate('/');
+      setIsToastVisible(true);
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
     } catch (error) {
       console.error('피드백 제출 중 오류 발생:', error);
     }
@@ -60,6 +64,12 @@ export const FeedbackModal = ({ onClose, recordId }: FeedbackModalProps) => {
           parentClose={onClose}
           recordId={recordId}
           satisfaction={satisfaction}
+        />
+      )}
+      {isToastVisible && (
+        <ToastMessage
+          text="소중한 의견 감사합니다 :)"
+          onClose={() => setIsToastVisible(false)}
         />
       )}
     </Modal>

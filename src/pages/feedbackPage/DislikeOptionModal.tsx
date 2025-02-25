@@ -4,6 +4,7 @@ import CloseIcon from "@icons/CloseIcon.svg";
 import { Button } from "@/components/common/button/Button";
 import { useState } from "react";
 import { submitFeedback } from "@/api/Feedback";
+import ToastMessage from "@/components/chat/ToastMessage";
 
 interface DislikeOptionModalProps {
   closeAllModals: () => void;
@@ -15,7 +16,7 @@ interface DislikeOptionModalProps {
 export const DislikeOptionModal = ({ closeAllModals, feedbackType, recordId, satisfaction }: DislikeOptionModalProps) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [userFeedback, setUserFeedback] = useState<string>("");
-
+  const [isToastVisible, setIsToastVisible] = useState(false);
   const handleClose = () => {
     closeAllModals();
   };
@@ -55,7 +56,10 @@ export const DislikeOptionModal = ({ closeAllModals, feedbackType, recordId, sat
         ...(selectedOption && { issue: selectedOption }),
         ...(userFeedback.trim() && { comment: userFeedback }),
       });
-      closeAllModals();
+      setIsToastVisible(true);
+      setTimeout(() => {
+        closeAllModals();
+      }, 3000);
     } catch (error) {
       console.error(error);
     }
@@ -99,6 +103,12 @@ export const DislikeOptionModal = ({ closeAllModals, feedbackType, recordId, sat
           제출하기
         </Button>
       </S.Content>
+      {isToastVisible && (
+        <ToastMessage
+          text="소중한 의견 감사합니다 :)"
+          onClose={() => setIsToastVisible(false)}
+        />
+      )}
     </Modal>
   );
 };
