@@ -34,7 +34,7 @@ export const postAiChat = async (chatRoomId: number, data: ChatMessageRequest) =
     const requestBody = data.guide
       ? {
         guide: true,
-        content: "어떤 경험을 말해야 할지 모르겠어요."
+        content: "🤔 경험정리 방법이 궁금해요"
       }
       : {
         content: data.content
