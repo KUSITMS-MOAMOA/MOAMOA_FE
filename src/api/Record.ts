@@ -3,6 +3,17 @@ import api from './instance';
 /** [4.4] 경험 기록하기 (채팅 + 메모)
  * @returns
  */
+
+interface PostRecordResponse {
+  is_success: boolean;
+  data: {
+    analysisDto: {
+      analysisId: number;
+    };
+    chatRecordCount: number;
+  };
+}
+
 export async function postRecord({
   title,
   content,
@@ -15,7 +26,7 @@ export async function postRecord({
   folderId: number;
   recordType: string;
   chatRoomId?: number;
-}) {
+}): Promise<PostRecordResponse> {
   try {
     const response = await api.post('/api/records',
       {
@@ -28,6 +39,7 @@ export async function postRecord({
     if (response.data.is_success) {
       return response.data;
     }
+    throw new Error('4.4 API request failed');
   } catch (error) {
     console.error(error);
     throw error;

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import UpArrowIcon from '@icons/UpArrowIcon.svg';
 import * as S from './ChatBox.Style';
+import ToastMessage from '@/components/chat/ToastMessage';
 
 interface ChatBoxProps {
   onSubmit: (message: string) => void;
@@ -17,6 +18,16 @@ interface ChatBoxProps {
  */
 export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
   const [message, setMessage] = useState('');
+  const [isToastVisible, setIsToastVisible] = useState(false);
+
+  const handelChage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length <= 500) {
+      setMessage(value);
+    } else {
+      setIsToastVisible(true);
+    }
+  };
 
   const handleSend = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,7 +45,7 @@ export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
         <S.ChatBoxInput
           type="text"
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={handelChage}
           placeholder={isReviewMode ? '채팅을 입력할 수 없습니다.' : '내용을 입력해 주세요'}
           disabled={isReviewMode}
         />
@@ -42,6 +53,12 @@ export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
           <img src={UpArrowIcon} alt="Send" />
         </S.ChatBoxButton>
       </S.ChatBoxForm>
+      {isToastVisible && (
+        <ToastMessage
+          text="메시지는 500자 이하로 입력해주세요."
+          onClose={() => setIsToastVisible(false)}
+        />
+      )}
     </S.ChatBoxContainer>
   );
 };
