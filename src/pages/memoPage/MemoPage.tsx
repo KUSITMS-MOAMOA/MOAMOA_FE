@@ -204,7 +204,7 @@ export const MemoPage = () => {
             break;
           }
           case 'E0400_NO_RECORD': {
-            alert('경험 기록의 내용이 충분하지 않습니다.');
+            alert('경험 기록의 내용이 충분하지 않습니다. 내용을 더 자세히 작성해주세요!');
             break;
           }
           default:
@@ -292,7 +292,7 @@ export const MemoPage = () => {
                 <S.Content
                   $isPC={isPC}
                   $isReviewMode={isReviewMode}
-                  placeholder={`어떤 상황에서 무엇을 했나요? 결과는 어땠나요?\n\n일단 기록해 보세요!\n음성으로 입력하거나 오타를 내도 괜찮아요.\n모아모아가 알아서 정리해드려요.`}
+                  placeholder={`어떤 상황에서 무엇을 했나요? 결과는 어땠나요?\n\n일단 기록해 보세요!\n오타를 내도 괜찮아요.\n모아모아가 알아서 정리해드려요.`}
                   value={tempMemo.memo}
                   onChange={handleChangeMemo}
                   maxLength={500}

@@ -6,7 +6,7 @@ import { BasicModal } from '@components/common/modal/BasicModal';
 import { ReportPopUp } from '@/components/common/popup/reportPopup/ReportPopUp';
 import { AbilityProps, AnalysisProps, SkillProps } from '@/types/Analysis';
 import { deleteAnaylsis, getAnalysis, patchAnalysis } from '@/api/Analysis';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { FolderChangePopUp } from '@/components/common/popup/FolderChangePopUp';
 import EditIcon from '@icons/EditIcon.svg';
 import KebabIcon from '@icons/KebabIcon.svg';
@@ -26,6 +26,8 @@ export const ReportPage = () => {
   const [showToast, setShowToast] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const { state } = useLocation();
+  const chatRecordCount = state?.chatRecordCount;
 
   const navigate = useNavigate();
 
@@ -51,10 +53,6 @@ export const ReportPage = () => {
               {},
             ),
           });
-
-          if (skillData.recordType === 'CHAT' && [1, 5, 10].includes(skillData.chatRecordCount)) {
-            setShowFeedbackModal(true);
-          }
         }
       }
     };
@@ -109,6 +107,17 @@ export const ReportPage = () => {
     }
   };
 
+  const handleBackIcon = () => {
+    navigate('/home', {
+      replace: true,
+      state: {
+        recordType: data?.recordType,
+        recordId: data?.recordId,
+        chatRecordCount,
+      },
+    });
+  };
+
   const toggleBottomSheet = () => {
     setOpenBottom((prev) => !prev);
   };
@@ -141,6 +150,7 @@ export const ReportPage = () => {
       <S.MobileHeader>
         <TabBar
           centerText="AI 역량 분석"
+          onClickBackIcon={handleBackIcon}
           onClick={toggleBottomSheet}
           isEditable={true}
           onClickEditIcon={toggleEditBottomSheet}

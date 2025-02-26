@@ -9,7 +9,6 @@ const gaTrackingId = import.meta.env.VITE_APP_GA_TRACKING_ID || 'G-2VSM2059HW';
 export const initializeGA = () => {
   try {
     ReactGA.initialize(gaTrackingId);
-    console.log('GA initialized successfully');
   } catch (error) {
     console.error('Failed to initialize GA:', error);
   }

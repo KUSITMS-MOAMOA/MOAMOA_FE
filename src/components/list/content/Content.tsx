@@ -18,7 +18,6 @@ interface ContentProps {
 export const Content = ({ listData, onClick }: ContentProps) => {
   const navigate = useNavigate();
 
-  console.log(listData);
   return (
     <>
       {listData.length > 0 ? (

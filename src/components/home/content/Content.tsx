@@ -21,7 +21,6 @@ export const Content = () => {
       const data = await getRecords();
       if (data) {
         setListData(data);
-        console.log(listData);
       }
     };
     fetchData();

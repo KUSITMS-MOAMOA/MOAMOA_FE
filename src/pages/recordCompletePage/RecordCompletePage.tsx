@@ -13,6 +13,7 @@ import { postRecord } from '@/api/Record';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { LoadingScreen } from '@/components/common/loading/LoadingScreen';
 import { useOutletContext } from 'react-router-dom';
+
 export const RecordCompletePage = () => {
   const [folders, setFolders] = useState<FolderListProps[]>([]);
   const [title, setTitle] = useState(getFormattedDate());
@@ -73,7 +74,7 @@ export const RecordCompletePage = () => {
         });
         if (response?.is_success) {
           const id = response.data.analysisDto.analysisId;
-          navigate(`/report/${id}`);
+          navigate(`/report/${id}`, { state: { chatRecordCount: response.data.chatRecordCount } });
           return true;
         }
       } catch (error) {

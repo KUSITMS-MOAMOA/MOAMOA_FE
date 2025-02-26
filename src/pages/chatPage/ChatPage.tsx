@@ -283,7 +283,7 @@ export const ChatPage = () => {
               break;
             }
             case 'E0305_NO_RECORD':
-              alert('경험 기록의 내용이 충분하지 않습니다. 내용을 더 자세히 작성해주세요.');
+              alert('경험 기록의 내용이 충분하지 않습니다. 내용을 더 자세히 작성해주세요!');
               setIsModalOpen(false);
               return;
             default:
