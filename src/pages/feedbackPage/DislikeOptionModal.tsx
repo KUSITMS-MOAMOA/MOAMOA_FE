@@ -105,7 +105,7 @@ export const DislikeOptionModal = ({ closeAllModals, feedbackType, recordId, sat
       </S.Content>
       {isToastVisible && (
         <ToastMessage
-          text="소중한 의견 감사합니다 :)"
+          text="소중한 의견 감사해요"
           onClose={() => setIsToastVisible(false)}
         />
       )}

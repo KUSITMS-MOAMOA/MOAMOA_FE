@@ -250,7 +250,7 @@ export const MemoPage = () => {
     e.preventDefault();
   };
 
-  const isSaveDisabled = !tempMemo.memo || tempMemo.memo.length < 30 || tempMemo.folderId === 0;
+  const isSaveDisabled = !tempMemo.memo || tempMemo.memo.length < 50 || tempMemo.folderId === 0;
 
   return (
     <>

@@ -1,6 +1,5 @@
 import ReactGA from "react-ga4";
 
-// 환경 변수가 없을 경우를 대비한 fallback 값 설정
 const gaTrackingId = import.meta.env.VITE_APP_GA_TRACKING_ID || 'G-2VSM2059HW';
 
 /**
