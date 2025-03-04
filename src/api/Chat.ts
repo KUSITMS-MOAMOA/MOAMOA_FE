@@ -83,12 +83,19 @@ export const getChat = async (chatRoomId: number): Promise<ChatHistoryResponse['
 /** [3.4] 채팅 삭제 */
 export const deleteChat = async (chatRoomId: number) => {
   try {
-    const response = await api.delete(`/api/records/chat/${chatRoomId}`);
-    if (response.data.is_success) {
-      return response.data;
+    if (!chatRoomId || isNaN(chatRoomId)) {
+      throw new Error('유효하지 않은 채팅방 ID입니다.');
     }
+
+    const response = await api.delete(`/api/records/chat/${chatRoomId}`);
+
+    if (!response.data.is_success) {
+      throw new Error('채팅 삭제 실패: 성공 응답이 아닙니다.');
+    }
+
+    return response.data;
   } catch (error) {
-    console.error(error);
+    console.error('채팅 삭제 중 오류 발생:', error);
     throw error;
   }
 };
