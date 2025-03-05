@@ -18,16 +18,17 @@ export const ChatBoxContainer = styled.div<ChatBoxContainerProps>`
 export const ChatBoxForm = styled.form`
   flex-direction: row;
   width: 100%;
-  height: 2.25rem;
   margin: 0.625rem;
   overflow: hidden;
   display: flex;
   gap: 0.625rem;
 `;
 
-export const ChatBoxInput = styled.input`
+export const ChatBoxInput = styled.textarea`
   width: 100%;
   height: 100%;
+  min-height: 2.25rem;
+  max-height: 6rem;
   background-color: ${Colors.gray25};
   border-radius: 0.625rem;
   font-size: 1rem;
@@ -35,6 +36,9 @@ export const ChatBoxInput = styled.input`
   border: none;
   padding: 0.625rem;
   outline: none;
+  
+  resize: none;
+  overflow-y: auto;
 `;
 
 export const ChatBoxButton = styled.button<{ $hasMessage: boolean }>`

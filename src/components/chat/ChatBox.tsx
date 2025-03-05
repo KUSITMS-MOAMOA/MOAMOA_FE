@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import UpArrowIcon from '@icons/UpArrowIcon.svg';
 import * as S from './ChatBox.Style';
 import ToastMessage from '@/components/chat/ToastMessage';
@@ -19,8 +19,16 @@ interface ChatBoxProps {
 export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
   const [message, setMessage] = useState('');
   const [isToastVisible, setIsToastVisible] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handelChage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = '2.25rem';
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+    }
+  }, [message]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     if (value.length <= 500) {
       setMessage(value);
@@ -43,9 +51,9 @@ export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
     <S.ChatBoxContainer $isPC={$isPC}>
       <S.ChatBoxForm onSubmit={handleSend}>
         <S.ChatBoxInput
-          type="text"
+          ref={textareaRef}
           value={message}
-          onChange={handelChage}
+          onChange={handleChange}
           placeholder={isReviewMode ? '채팅을 입력할 수 없습니다.' : '내용을 입력해 주세요'}
           disabled={isReviewMode}
         />
