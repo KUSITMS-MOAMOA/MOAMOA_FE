@@ -1,11 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ChatBubble } from '@components/chat/ChatBubble';
 import { ChatBox } from '@components/chat/ChatBox';
 import { GuideButton } from '@components/chat/GuideButton';
 import { TabBar } from '@components/layout/tabBar/TabBar';
 import { DetailModal } from '@components/common/modal/DetailModal';
-import { useNavigate } from 'react-router-dom';
 import * as S from './ChatPage.Style';
 import ToastMessage from '@/components/chat/ToastMessage';
 import { LoadingDots } from '@components/chat/LodingDots';
@@ -61,7 +60,6 @@ export const ChatPage = () => {
 
   useEffect(() => {
     if (messages.length > 1) {
-      // 배포 후 모바일에서 확인 필요
       scrollToBottom();
     }
   }, [messages]);
@@ -101,7 +99,6 @@ export const ChatPage = () => {
 
         if (response?.chats && response.chats.length > 0) {
           // 채팅 기록이 있는 경우만 체크
-          // 채팅 기록이 있는 경우
           const chatHistory = response.chats.map((chat) => ({
             message: chat.content,
             isMe: chat.author === 'user' ? true : false,
@@ -204,15 +201,24 @@ export const ChatPage = () => {
     }
   };
 
-  const handleTemporarySave = () => {
+  const handleTemporarySave = async () => {
     const pathname = window.location.pathname;
     if (pathname.includes('review-chat')) {
       navigate(-1);
       return;
     }
+
     if (messages.length > 1) {
       setIsTempSaveModalOpen(true);
     } else {
+      // 메시지가 없는 경우에도 채팅방 삭제
+      if (chatRoomId !== null) {
+        try {
+          await deleteChat(chatRoomId);
+        } catch (error) {
+          console.error('채팅방 삭제 중 오류 발생:', error);
+        }
+      }
       navigate(-1);
     }
   };
@@ -236,7 +242,10 @@ export const ChatPage = () => {
       // 현재 채팅 임시저장
       await postTmpChat(chatRoomId);
       setShowToast(true);
-      navigate('/home');
+      // 토스트 메시지가 표시된 후 홈으로 이동
+      setTimeout(() => {
+        navigate('/home');
+      }, 1000);
     } catch {
       navigate(-1);
     }
@@ -301,17 +310,59 @@ export const ChatPage = () => {
     }
   };
 
+  // 새로운 채팅방 초기화 함수
+  const initializeChat = useCallback(async () => {
+    try {
+      // 임시저장된 채팅방이 있는지 먼저 확인
+      const tmpChatData = await checkTmpChat();
+
+      if (tmpChatData.exist && tmpChatData.chatRoomId) {
+        // 임시저장된 채팅방이 있으면 해당 채팅방으로 이동
+        setChatRoomId(tmpChatData.chatRoomId);
+        setShowGuideButton(false);
+        await fetchChatHistory(tmpChatData.chatRoomId);
+      } else {
+        // 임시저장된 채팅방이 없을 때만 새 채팅방 생성
+        const newChatData = await postChat();
+        if (newChatData?.chatRoomId) {
+          setChatRoomId(newChatData.chatRoomId);
+          setMessages([
+            {
+              message: formattedFirstChat,
+              isMe: false,
+              isLoading: false,
+            },
+          ]);
+          setShowGuideButton(true);
+        }
+      }
+    } catch (error) {
+      console.error('채팅방 초기화 중 오류 발생:', error);
+    }
+  }, [formattedFirstChat, fetchChatHistory]);
+
+  // URL 파라미터로부터 채팅방 ID 설정
+  useEffect(() => {
+    if (id) {
+      // URL에 id가 있는 경우 해당 채팅방 사용
+      setChatRoomId(Number(id));
+      fetchChatHistory(Number(id));
+    } else {
+      // URL에 id가 없는 경우 초기화 진행
+      initializeChat();
+    }
+  }, [id, initializeChat, fetchChatHistory]);
+
+  // handleNewChat 함수 수정
   const handleNewChat = useCallback(async () => {
     if (chatRoomId !== null) {
       await deleteChat(chatRoomId);
     }
-    // 새로운 채팅방 생성
     const newChatData = await postChat();
     if (newChatData?.chatRoomId) {
       setChatRoomId(newChatData.chatRoomId);
     }
     setIsLoadTempModalOpen(false);
-    // 새로 작성하기를 선택한 경우 기본 메시지로 초기화
     setMessages([
       {
         message: formattedFirstChat,
@@ -322,22 +373,24 @@ export const ChatPage = () => {
     setShowGuideButton(true);
   }, [chatRoomId, formattedFirstChat]);
 
-  // URL 파라미터로부터 채팅방 ID 설정
-  useEffect(() => {
-    if (id) {
-      setChatRoomId(Number(id));
-    } else {
-      handleNewChat();
-    }
-  }, [handleNewChat, id]);
-
   // 임시저장 채팅 계속하기 선택 시
   const handleContinueChat = async () => {
     setIsLoadTempModalOpen(false);
     setShowGuideButton(false);
     if (tmpChatRoomId !== null) {
-      setChatRoomId(tmpChatRoomId); // 현재 채팅방 ID 업데이트
+      // 현재 새로 생성된 채팅방이 있다면 삭제
+      if (chatRoomId !== null && chatRoomId !== tmpChatRoomId) {
+        try {
+          await deleteChat(chatRoomId);
+        } catch (error) {
+          console.error('새로 생성된 채팅방 삭제 중 오류 발생:', error);
+        }
+      }
+
+      // 임시저장된 채팅방으로 설정
+      setChatRoomId(tmpChatRoomId);
       await fetchChatHistory(tmpChatRoomId);
+      navigate(`/chat/${tmpChatRoomId}`);
     }
   };
 
