@@ -147,8 +147,8 @@ export const Content = styled.textarea<ReviewModeProps>`
   font-size: 1rem;
   font-weight: 400;
   line-height: 145%;
-  width: 95%;
-  min-height: ${({ $isReviewMode }) => ($isReviewMode ? '10rem' : '15rem')};
+  width: 96%;
+  min-height: ${({ $isReviewMode }) => ($isReviewMode ? '10rem' : '16rem')};
   height: 100%;
   border: none;
   outline: none;
