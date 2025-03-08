@@ -75,6 +75,13 @@ export const GlobalStyle = createGlobalStyle`
 
   html, body, #root {
     font-family: ${theme.fonts.regular};
+    width: 100%; 
+    height: 100%;
+    min-height: 100dvh; /* iOS 뷰포트 문제 해결 */
+    overscroll-behavior: none; /* 스크롤 튕김 방지 */
+    touch-action: manipulation; /* 터치 버그 방지 */
+    padding-bottom: env(safe-area-inset-bottom); /* iOS 하단 흰 여백 제거 */
+    -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
   }
 
   a {
