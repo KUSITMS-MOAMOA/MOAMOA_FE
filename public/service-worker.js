@@ -20,11 +20,15 @@ const addResourcesToCache = async (resources) => {
 
 // 서비스 워커 최초 등록 시 실행되는 이벤트
 self.addEventListener("install", (event) => {
+  self.skipWaiting();
   event.waitUntil(addResourcesToCache(urlsToCache));
 });
 
 // 오래된 캐시 삭제
 self.addEventListener("activate", (event) => {
+  console.log("Service worker activating...");
+  self.clients.claim();
+
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -47,4 +51,11 @@ self.addEventListener("fetch", (event) => {
       return cachedResponse || fetch(event.request);
     })
   );
+});
+
+// 새로운 버전이 있으면 바로 적용
+self.addEventListener("message", (event) => {
+  if (event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
