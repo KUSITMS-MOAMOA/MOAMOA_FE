@@ -2,6 +2,7 @@ import { Colors } from '@/styles/colors';
 import styled from 'styled-components';
 
 export const Header = styled.header`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -77,4 +78,12 @@ export const ChipContainer = styled.div`
   ${(props) => props.theme.breakpoints.min} {
     gap: 0.75rem;
   }
+`;
+
+export const Image = styled.img`
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  width: 93px;
+  height: 87px;
 `;

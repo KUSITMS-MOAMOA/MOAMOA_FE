@@ -4,6 +4,7 @@ import { CategoryChip } from '../../common/chip/CategoryChip';
 import FolderIcon from '@icons/FolderIcon.svg';
 import { Header } from '@/components/layout/header/Header';
 import { FolderListProps } from '@/types/Folder';
+import ListPageIcon from '@/assets/icons/ListPageIcon.svg';
 
 interface ListHeaderProps {
   folderData: FolderListProps[];
@@ -37,6 +38,7 @@ export const ListHeader = ({
     <S.Header>
       <Header onClick={onClickSideBar} />
       <S.Title>{nickname}님의 경험 모아보기</S.Title>
+      <S.Image src={ListPageIcon} />
       <S.FolderContainer>
         <S.ChipContainer>
           <S.FolderIcon onClick={goToFolderPage}>
