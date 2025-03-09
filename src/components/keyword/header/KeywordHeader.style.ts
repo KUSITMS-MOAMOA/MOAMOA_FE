@@ -2,6 +2,7 @@ import { Colors } from '@/styles/colors';
 import styled from 'styled-components';
 
 export const Header = styled.header`
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 0rem 1.25rem 0rem 1.5rem;
@@ -59,4 +60,10 @@ export const Item = styled.div<{ $isSelected: boolean }>`
     font-size: 1.25rem;
     line-height: 135%;
   }
+`;
+
+export const Image = styled.img`
+  position: absolute;
+  top: 16px;
+  right: 20px;
 `;
