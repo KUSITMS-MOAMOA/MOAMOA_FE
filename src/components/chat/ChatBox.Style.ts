@@ -39,6 +39,16 @@ export const ChatBoxInput = styled.textarea`
   
   resize: none;
   overflow-y: auto;
+
+  ::placeholder {
+    font-family: 'Pretendard';
+    font-size: 1rem;
+  }
+
+  ::-webkit-input-placeholder {
+    font-family: 'Pretendard';
+    font-size: 1rem;
+  }
 `;
 
 export const ChatBoxButton = styled.button<{ $hasMessage: boolean }>`

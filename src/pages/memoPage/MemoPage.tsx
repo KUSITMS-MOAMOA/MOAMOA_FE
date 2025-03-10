@@ -204,7 +204,8 @@ export const MemoPage = () => {
             break;
           }
           case 'E0400_NO_RECORD': {
-            alert('경험 기록의 내용이 충분하지 않습니다. 내용을 더 자세히 작성해주세요!');
+            const nickname = localStorage.getItem('nickname');
+            alert(`경험을 분석하기에 내용이 충분하지 않아요. ${nickname}님의 행동을 자세히 작성해주세요!`);
             break;
           }
           default:
@@ -250,7 +251,7 @@ export const MemoPage = () => {
     e.preventDefault();
   };
 
-  const isSaveDisabled = !tempMemo.memo || tempMemo.memo.length < 30 || tempMemo.folderId === 0;
+  const isSaveDisabled = !tempMemo.memo || tempMemo.memo.length < 50 || tempMemo.folderId === 0;
 
   return (
     <>

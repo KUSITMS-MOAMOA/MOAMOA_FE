@@ -160,7 +160,7 @@ export const ChatPage = () => {
     } catch {
       setMessages((prev) => [
         ...prev.slice(0, -1),
-        { message: '메시지 전송에 실패했습니다.', isMe: false, isLoading: false },
+        { message: '메시지 전송에 실패했어요. 다시 한 번 시도해주세요!', isMe: false, isLoading: false },
       ]);
     }
   };
