@@ -20,6 +20,7 @@ export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
   const [message, setMessage] = useState('');
   const [isToastVisible, setIsToastVisible] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const isSendingRef = useRef(false);
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -37,18 +38,36 @@ export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
     }
   };
 
-  const handleSend = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSend = (event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
+
+    if (isSendingRef.current) return; // 실행 중이면 무시
+    isSendingRef.current = true; // 실행 상태로 변경
+
     if (message.trim()) {
+      console.log('Sending message:', message);
       onSubmit(message);
-      setMessage('');
+
+      // 메시지 전송 후 100ms 뒤에 입력창 초기화
+      setTimeout(() => {
+        setMessage('');
+        isSendingRef.current = false;
+      }, 100);
+    } else {
+      isSendingRef.current = false;
     }
+
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault(); // 기본 Enter 이벤트 방지
-      handleSend(event as unknown as React.FormEvent<HTMLFormElement>);
+      event.stopPropagation(); // 이벤트 전파 방지
+
+      if (!event.repeat) { // 키가 반복 입력되는 경우 방지
+        handleSend(event as unknown as React.FormEvent<HTMLFormElement>);
+      }
     }
   };
 
