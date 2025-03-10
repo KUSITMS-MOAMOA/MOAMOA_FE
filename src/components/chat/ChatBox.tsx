@@ -21,6 +21,8 @@ export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const isSendingRef = useRef(false);
+  const isSoftReturnRef = useRef(false);
+  const isMobileRef = useRef(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -28,6 +30,27 @@ export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
       textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
     }
   }, [message]);
+
+  useEffect(() => {
+    if (!isMobileRef.current) return;
+
+    const handleBeforeInput = (event: InputEvent) => {
+      if (event.inputType === "insertLineBreak") {
+        isSoftReturnRef.current = true; // 줄바꿈 감지
+      }
+    };
+
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.addEventListener("beforeinput", handleBeforeInput);
+    }
+
+    return () => {
+      if (textarea) {
+        textarea.removeEventListener("beforeinput", handleBeforeInput);
+      }
+    };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -45,7 +68,6 @@ export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
     isSendingRef.current = true; // 실행 상태로 변경
 
     if (message.trim()) {
-      console.log('Sending message:', message);
       onSubmit(message);
 
       // 메시지 전송 후 100ms 뒤에 입력창 초기화
@@ -60,16 +82,23 @@ export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-
     // 한글 입력 시 Enter 이벤트 방지 & 줄바꿈 정상 동작
     if (event.nativeEvent.isComposing) return;
 
     if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault(); // 기본 Enter 이벤트 방지
-      event.stopPropagation(); // 이벤트 전파 방지
+      // 모바일 환경에서 줄바꿈 감지 후 줄바꿈 허용 (전송 방지)
+      if (isMobileRef.current && isSoftReturnRef.current) {
+        isSoftReturnRef.current = false; // 줄바꿈 감지 후 초기화
+        return;
+      }
 
-      if (!event.repeat) { // 키가 반복 입력되는 경우 방지
-        handleSend(event as unknown as React.FormEvent<HTMLFormElement>);
+      if (!isMobileRef.current) {
+        event.preventDefault(); // 기본 Enter 이벤트 방지
+        event.stopPropagation(); // 이벤트 전파 방지
+
+        if (!event.repeat) { // 키가 반복 입력되는 경우 방지
+          handleSend(event as unknown as React.FormEvent<HTMLFormElement>);
+        }
       }
     }
   };
