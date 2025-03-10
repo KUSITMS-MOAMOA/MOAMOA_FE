@@ -61,6 +61,9 @@ export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
 
+    // 한글 입력 시 Enter 이벤트 방지 & 줄바꿈 정상 동작
+    if (event.nativeEvent.isComposing) return;
+
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault(); // 기본 Enter 이벤트 방지
       event.stopPropagation(); // 이벤트 전파 방지
