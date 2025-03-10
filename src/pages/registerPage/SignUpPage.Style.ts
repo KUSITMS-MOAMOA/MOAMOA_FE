@@ -34,7 +34,7 @@ export const Container = styled.div<SignUpPageStyleProps>`
 export const Title = styled.p`
   font-size: 1.25rem;
   font-weight: 700;
-  margin: 4rem 0 2.5rem 0;
+  margin: 3rem 0 1.5rem 0;
   text-align: left;
   width: 100%;
 `;
@@ -57,7 +57,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.5rem;
+  gap: 1.5rem;
   width: 100%;
   height: 100%;
   position: relative;
@@ -65,6 +65,6 @@ export const Form = styled.form`
 
 export const ButtonWrapper = styled.div`
   position: absolute;
-  bottom: 3rem;
+  bottom: 1.5rem;
   width: 100%;
 `;
