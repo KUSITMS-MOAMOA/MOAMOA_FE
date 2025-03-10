@@ -39,6 +39,7 @@ export const ChatBoxInput = styled.textarea`
   
   resize: none;
   overflow-y: auto;
+  letter-spacing: -1px;
 
   ::placeholder {
     font-family: 'Pretendard';
