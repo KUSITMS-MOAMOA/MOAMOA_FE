@@ -45,6 +45,13 @@ export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault(); // 기본 Enter 이벤트 방지
+      handleSend(event as unknown as React.FormEvent<HTMLFormElement>);
+    }
+  };
+
   const hasMessage = message.trim().length > 0;
 
   return (
@@ -54,6 +61,7 @@ export const ChatBox = ({ onSubmit, isReviewMode, $isPC }: ChatBoxProps) => {
           ref={textareaRef}
           value={message}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
           placeholder={isReviewMode ? '채팅을 입력할 수 없습니다.' : '내용을 입력해 주세요'}
           disabled={isReviewMode}
         />

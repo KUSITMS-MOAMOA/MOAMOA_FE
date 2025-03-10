@@ -30,11 +30,13 @@ export const Content = styled.div`
     flex-direction: row;
     width: 900px;
     height: 100%;
+    min-height: 450px;
     background-color: ${Colors.white};
     align-items: center;
     border-radius: 20px;
-    padding: 1rem 1rem 1rem 1rem;
+    padding: 1rem;
   }
+  margin-top: 3rem;
   bottom: 10rem;
 `;
 
