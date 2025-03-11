@@ -19,13 +19,18 @@ export const SignUpPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get('token');
   const isPC = useMediaQuery('(min-width: 768px)');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
+
     e.preventDefault();
     if (!token) {
       console.error('등록 토큰이 없습니다.');
       return;
     }
+
+    setIsSubmitting(true);
+
     try {
       const apiResponse = await registerUser(token, nickname, status);
       if (apiResponse.is_success) {
@@ -36,6 +41,8 @@ export const SignUpPage = () => {
       }
     } catch (error) {
       console.error('회원가입 실패:', error);
+    } finally {
+      setIsSubmitting(false); // 회원가입 완료 후 버튼 비활성화 해제 (API 요청 실패 시 재시도 가능)
     }
   };
 
@@ -63,7 +70,7 @@ export const SignUpPage = () => {
               <SelectBox select={status} onChange={setStatus} statusData={statusOptions} placeholder="선택하기" />
             </S.InputWrapper>
             <S.ButtonWrapper>
-              <Button styleType="basic" disabled={isError || !nickname || !status}>
+              <Button styleType="basic" disabled={isError || !nickname || !status || isSubmitting}>
                 완료
               </Button>
             </S.ButtonWrapper>
