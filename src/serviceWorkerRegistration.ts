@@ -5,7 +5,6 @@ export const register = () => {
         scope: '/',
       })
       .then((registration) => {
-        console.log("Service worker registration succeeded", registration);
 
         // 서비스 워커 업데이트 감지
         registration.onupdatefound = () => {
