@@ -9,7 +9,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { Modal } from '../modal/Modal';
 
 interface FolderPopUpProps {
-  onClick: () => void;
+  onClick: (newFolder?: { folderId: number; title: string }) => void;
 }
 
 /**
@@ -35,7 +35,12 @@ export const FolderPopUp = ({ onClick }: FolderPopUpProps) => {
   const handleClickButton = async () => {
     const response = await postNewFolder(folderName);
     if (response.is_success) {
-      onClick();
+      // 생성된 폴더 정보를 부모 컴포넌트에 전달
+      const newFolder = {
+        folderId: response.data.folderDtoList[0].folderId,
+        title: folderName,
+      };
+      onClick(newFolder);
     }
   };
 
@@ -43,7 +48,7 @@ export const FolderPopUp = ({ onClick }: FolderPopUpProps) => {
     <>
       <S.Header>
         <S.Title>새 폴더 추가하기</S.Title>
-        <S.Icon src={CloseIcon} alt="closeIcon" onClick={onClick} />
+        <S.Icon src={CloseIcon} alt="closeIcon" onClick={() => onClick()} />
       </S.Header>
       <S.SheetContent>
         추가할 폴더의 이름을 적어주세요.

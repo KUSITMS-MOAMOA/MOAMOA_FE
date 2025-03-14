@@ -32,9 +32,13 @@ export const FeedbackModal = ({ onClose, recordId }: FeedbackModalProps) => {
     try {
       await submitFeedback({ recordId, satisfaction: "GOOD" })
       setIsToastVisible(true);
+
       setTimeout(() => {
-        navigate('/');
-      }, 3000);
+        onClose();
+        setTimeout(() => {
+          navigate('/');
+        }, 1000);
+      }, 2000);
     } catch (error) {
       console.error('피드백 제출 중 오류 발생:', error);
     }

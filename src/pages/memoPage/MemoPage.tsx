@@ -142,6 +142,27 @@ export const MemoPage = () => {
     }));
   };
 
+  const handleFolderPopUpClose = (newFolder?: { folderId: number; title: string }) => {
+    setIsBottomSheetOpen(false);
+
+    if (newFolder) {
+      setTempMemo((prev) => ({
+        ...prev,
+        category: newFolder.title,
+        folderId: newFolder.folderId,
+      }));
+
+      // 폴더 목록 즉시 업데이트
+      const fetchFolders = async () => {
+        const folderList = await getFolders();
+        if (folderList) {
+          setFolders(folderList);
+        }
+      };
+      fetchFolders();
+    }
+  };
+
   const handleChangeMemo = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newMemo = e.target.value;
     if (newMemo.length > 500) {
@@ -374,7 +395,7 @@ export const MemoPage = () => {
             {showToast && (
               <ToastMessage text="경험이 임시저장 되었어요" onClose={() => setShowToast(false)} />
             )}
-            {isBottomSheetOpen && <FolderPopUp onClick={() => setIsBottomSheetOpen(false)} />}
+            {isBottomSheetOpen && <FolderPopUp onClick={handleFolderPopUpClose} />}
           </S.Container>
         </S.PageContainer>
       )}
