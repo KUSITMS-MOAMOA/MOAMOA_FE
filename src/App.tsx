@@ -21,8 +21,6 @@ export const App = () => {
   useEffect(() => {
     // 첫번째 경로 세그먼트만 추출
     const trackPath = '/' + location.pathname.split('/')[1];
-
-    console.log('Track Path', trackPath);
     trackPageView(trackPath);
   }, [location.pathname]);
 
