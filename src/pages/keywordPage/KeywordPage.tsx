@@ -59,8 +59,8 @@ export const KeywordPage = () => {
           <S.Container $isEmpty={chartData.length === 0}>
             {chartData.length > 0 ? (
               <S.Content>
-                <SkillGraph />
-                <SkillList onClick={handleClickSkillList} setSelectedKeyword={setSelectedKeyword} />
+                <SkillGraph chartData={chartData} />
+                <SkillList chartData={chartData} onClick={handleClickSkillList} setSelectedKeyword={setSelectedKeyword} />
               </S.Content>
             ) : (
               <S.EmptyContainer>

@@ -1,32 +1,22 @@
-import { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 import * as S from './SkillGraph.Style';
-import { getGraph } from '@/api/Graph';
 import { SkillData } from '@/types/SkillData';
 import { Colors } from '@/styles/colors';
 
-export const SkillGraph = () => {
-  const [chartData, setChartData] = useState<SkillData[]>([]);
+interface SkillGraphProps {
+  chartData: SkillData[];
+}
 
-  useEffect(() => {
-    const fetchGraphData = async () => {
-      const data = await getGraph();
-      if (data) {
-        const topSkills = data
-          .sort((a: SkillData, b: SkillData) => b.percent - a.percent)
-          .slice(0, 7);
+export const SkillGraph = ({ chartData }: SkillGraphProps) => {
 
-        setChartData(
-          topSkills.map((skill: SkillData) => ({
-            name: skill.keyword,
-            value: skill.count,
-            percent: skill.percent,
-          })),
-        );
-      }
-    };
-    fetchGraphData();
-  }, []);
+  const graphData = chartData
+    .sort((a: SkillData, b: SkillData) => b.percent - a.percent)
+    .slice(0, 7)
+    .map((skill: SkillData) => ({
+      name: skill.keyword,
+      value: skill.count,
+      percent: skill.percent,
+    }));
 
   const getChartColor = (percent: number) => {
     if (percent > 33) return Colors.blue200;
@@ -79,7 +69,7 @@ export const SkillGraph = () => {
     <S.GraphContainer>
       <PieChart width={S.CHART_STYLES.width} height={S.CHART_STYLES.height}>
         <Pie
-          data={chartData}
+          data={graphData}
           innerRadius={S.CHART_STYLES.innerRadius}
           outerRadius={S.CHART_STYLES.outerRadius}
           cornerRadius={S.CHART_STYLES.cornerRadius}
@@ -88,7 +78,7 @@ export const SkillGraph = () => {
           label={renderCustomizedLabel}
           labelLine={false}
         >
-          {chartData.map((entry, index) => (
+          {graphData.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={getChartColor(entry.percent)} />
           ))}
         </Pie>

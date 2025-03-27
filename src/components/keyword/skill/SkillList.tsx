@@ -1,9 +1,8 @@
 import * as S from './SkillList.Style';
-import { getGraph } from '@/api/Graph';
 import { SkillData } from '@/types/SkillData';
-import { useState, useEffect } from 'react';
 
 interface SkillListProps {
+  chartData: SkillData[];
   onClick: () => void;
   setSelectedKeyword: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
@@ -14,34 +13,17 @@ interface SkillListProps {
  * @param setSelectedKeyword - setSelectedKeyword
  * @returns
  */
-export const SkillList = ({ onClick, setSelectedKeyword }: SkillListProps) => {
-  const [chartData, setChartData] = useState<SkillData[]>([]);
+export const SkillList = ({ chartData, onClick, setSelectedKeyword }: SkillListProps) => {
 
-  useEffect(() => {
-    const fetchGraphData = async () => {
-      const data = await getGraph();
-      if (data) {
-        const topSkills = data
-          .sort((a: SkillData, b: SkillData) => b.percent - a.percent)
-          .slice(0, 7);
-
-        setChartData(
-          topSkills.map((skill: SkillData) => ({
-            keyword: skill.keyword,
-            count: skill.count,
-            percent: skill.percent,
-          })),
-        );
-      }
-    };
-    fetchGraphData();
-  }, []);
+  const topSkills = chartData
+    .sort((a, b) => b.percent - a.percent)
+    .slice(0, 7);
 
   return (
     <S.Container>
       <S.Line />
       <S.ListItemContainer>
-        {chartData.map((skill) => (
+        {topSkills.map((skill) => (
           <S.ListItem
             key={skill.keyword}
             $percent={skill.percent}
