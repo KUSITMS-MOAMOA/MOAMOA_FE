@@ -13,6 +13,7 @@ export const ChatBoxContainer = styled.div<ChatBoxContainerProps>`
   align-items: center;
   background-color: ${Colors.white};
   border-radius: ${({ $isPC }) => ($isPC ? '1.25rem' : '0')};
+  padding-bottom: ${({ $isPC }) => ($isPC ? '0' : '0.5rem')};
 `;
 
 export const ChatBoxForm = styled.form`
