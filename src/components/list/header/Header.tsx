@@ -52,7 +52,10 @@ export const ListHeader = ({
               <CategoryChip
                 key={item.folderId}
                 isSelected={item.title === selectFolder}
-                onClick={() => onClick(item.title)}
+                onClick={() => {
+                  if (item.title === selectFolder) return;
+                  onClick(item.title);
+                }}
               >
                 {item.title}
               </CategoryChip>

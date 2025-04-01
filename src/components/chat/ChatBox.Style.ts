@@ -13,7 +13,7 @@ export const ChatBoxContainer = styled.div<ChatBoxContainerProps>`
   align-items: center;
   background-color: ${Colors.white};
   border-radius: ${({ $isPC }) => ($isPC ? '1.25rem' : '0')};
-  padding-bottom: ${({ $isPC }) => ($isPC ? '0' : '0.5rem')};
+  padding-bottom: ${({ $isPC }) => ($isPC ? '0' : '0.625rem')};
 `;
 
 export const ChatBoxForm = styled.form`
@@ -37,7 +37,7 @@ export const ChatBoxInput = styled.textarea`
   border: none;
   padding: 0.625rem;
   outline: none;
-  
+
   resize: none;
   overflow-y: auto;
   letter-spacing: -1px;
