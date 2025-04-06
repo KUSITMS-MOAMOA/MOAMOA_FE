@@ -7,20 +7,24 @@ import { FloatingButton } from '@/components/common/button/FloatingButton';
 interface ContentProps {
   listData: ListProps[];
   onClick: () => void;
+  isLoading: boolean;
 }
 
 /**
  *
  * @param listData - listData
  * @param onClick - 클릭 시 수행하는 함수
+ * @param isLoading - 로딩
  * @returns
  */
-export const Content = ({ listData, onClick }: ContentProps) => {
+export const Content = ({ listData, onClick, isLoading }: ContentProps) => {
   const navigate = useNavigate();
 
   return (
     <>
-      {listData.length > 0 ? (
+      {isLoading ? (
+        <div />
+      ) : listData.length > 0 ? (
         listData.map((item) => (
           <List
             key={item.analysisId}
@@ -34,9 +38,7 @@ export const Content = ({ listData, onClick }: ContentProps) => {
           />
         ))
       ) : (
-        <>
-          <Empty />
-        </>
+        <Empty />
       )}
       <FloatingButton onClick={onClick} />
     </>

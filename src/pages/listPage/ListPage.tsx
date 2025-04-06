@@ -16,6 +16,7 @@ export const ListPage = () => {
   const [listData, setListData] = useState<ListProps[]>([]);
   const [hasNext, setHasNext] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
@@ -24,6 +25,8 @@ export const ListPage = () => {
     async (folder: string, recordId: number) => {
       if (isFetching) return; // 이미 데이터 로딩 중이면 중지
       setIsFetching(true);
+      if (recordId === 0) setIsLoading(true);
+
       try {
         const listResponse = await getFolderLists(folder, recordId);
         if (listResponse?.recordDtoList && listResponse.recordDtoList.length > 0) {
@@ -36,9 +39,11 @@ export const ListPage = () => {
           setHasNext(listResponse.hasNext);
         } else {
           setHasNext(false);
+          if (recordId === 0) setListData([]);
         }
       } finally {
         setIsFetching(false);
+        if (recordId === 0) setIsLoading(false);
       }
     },
     [isFetching],
@@ -90,9 +95,10 @@ export const ListPage = () => {
     if (folderName === 'all') {
       setSelectFolder('all');
     } else {
+      if (selectFolder === folderName) return;
       setSelectFolder(folderName);
     }
-    setListData([]);
+
     setLastRecordId(0);
   }, []);
 
@@ -113,7 +119,7 @@ export const ListPage = () => {
         onClickSideBar={handleToggleSideBar}
       />
       <S.Content $isEmpty={listData.length === 0}>
-        <Content listData={listData} onClick={handleToggleBottomSheet} />
+        <Content listData={listData} onClick={handleToggleBottomSheet} isLoading={isLoading} />
         <div ref={observerRef} style={{ height: '20px' }} />
       </S.Content>
       {openBottom && <RecordBottomSheet onClick={handleToggleBottomSheet} />}
