@@ -15,6 +15,7 @@ interface LISTPROPS {
 export const Content = () => {
   const navigate = useNavigate();
   const [listData, setListData] = useState<LISTPROPS[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +23,7 @@ export const Content = () => {
       if (data) {
         setListData(data);
       }
+      setIsLoading(false); // 여기!
     };
     fetchData();
   }, []);
@@ -38,8 +40,10 @@ export const Content = () => {
           더보기
         </S.Plus>
       </S.TextContainer>
-      <S.ListContainer $isEmpty={listData.length === 0}>
-        {listData.length === 0 ? (
+      <S.ListContainer $isEmpty={!isLoading && listData.length === 0}>
+        {isLoading ? (
+          <div />
+        ) : listData.length === 0 ? (
           <Empty />
         ) : (
           listData.map((item, index) => (

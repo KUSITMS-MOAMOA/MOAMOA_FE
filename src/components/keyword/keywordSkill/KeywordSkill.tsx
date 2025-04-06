@@ -81,7 +81,6 @@ export const KeywordSkill = ({
   useEffect(() => {
     if (selectedKeyword) {
       const fetchData = async () => {
-        setRecordList([]);
         setLastRecordId(0);
         await getKeywordData(selectedKeyword, 0);
       };
