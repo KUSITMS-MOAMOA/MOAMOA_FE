@@ -19,6 +19,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { AxiosError } from 'axios';
 import { useOutletContext } from 'react-router-dom';
 import { useValidatePathId } from '@/hooks/useValidatePathId';
+import { InfoButton } from '@/components/memo/InfoButton';
 
 interface FolderType {
   folderId: number;
@@ -311,11 +312,32 @@ export const MemoPage = () => {
                   {titleWarning && <S.Warning>{titleWarning}</S.Warning>}
                 </S.WarningCountContainer>
                 <S.Line />
+                <S.InfoButtonWrapper>
+                  <InfoButton
+                    content={
+                      <>
+                        <p>✏️ 어떤 경험을 했나요?</p>
+                        <p>마주한 상황과 문제를 해결하기 위한 과정을 적어보세요.</p>
+                        <br />
+                        <p>📌 이런 내용이 포함되면 좋아요!</p>
+                        <ul>
+                          <li>- 주어진 목표</li>
+                          <li>- 문제를 해결하기 위한 노력과 결과</li>
+                        </ul>
+                        <br />
+                        <p>📑 작성 예시:</p>
+                        <p>
+                          캡스톤 디자인 프로젝트 기획안 발표를 했다. 나는 기획 파트를 담당해서 서비스 IA 구조를 정리하고 플로우 차트를 그렸다. 각 단계에서 유저가 어떻게 행동할지 예상하며 꼼꼼하게 확인했다. 그리고 교수님께 서비스 흐름을 이해하기 쉽다는 피드백을 받았다.
+                        </p>
+                      </>
+                    }
+                    $isPc={isPC}
+                  />
+                </S.InfoButtonWrapper>
                 <S.Content
                   $isPC={isPC}
                   $isReviewMode={isReviewMode}
-                  placeholder={`✏️ 어떤 경험을 했나요?\n마주한 상황과 문제를 해결하기 위한 과정을 적어보세요.\n\n📌 이런 내용이 포함되면 좋아요!\n주어진 목표, 문제를 해결하기 위한 노력과 결과\n\n📑 작성 예시 :\n캡스톤 디자인 프로젝트 기획안 발표를 했다. 나는 기획 파트를 담당해서 서비스 IA 구조를 정리하고 플로우 차트를 그렸다. 각 단계에서 유저가 어떻게 행동할지 예상하며 꼼꼼하게 확인했다. 그리고 교수님께 서비스 흐름을 이해하기 쉽다는 피드백을 받았다.
-                  `}
+                  placeholder={`어떤 상황에서 무엇을 했나요? 결과는 어땠나요?\n\n일단 기록해 보세요!\n음성으로 입력하거나 오타를 내도 괜찮아요.\n모아모아가 알아서 정리해드려요.`}
                   value={tempMemo.memo}
                   onChange={handleChangeMemo}
                   maxLength={500}

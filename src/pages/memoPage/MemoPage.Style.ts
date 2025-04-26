@@ -226,3 +226,10 @@ export const Icon = styled.svg`
   width: 38px;
   height: 38px;
 `;
+
+export const InfoButtonWrapper = styled.div`
+  position: absolute;
+  top: 70px;
+  right: 0;
+  margin-right: 30px;
+`;
