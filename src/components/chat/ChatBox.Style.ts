@@ -37,13 +37,13 @@ export const ChatBoxInput = styled.textarea`
   border: none;
   padding: 0.625rem;
   outline: none;
+  font-family: 'Pretendard', sans-serif;
 
   resize: none;
   overflow-y: auto;
-  letter-spacing: -1px;
 
   ::placeholder {
-    font-family: 'Pretendard';
+    font-family: 'Pretendard', sans-serif;
     font-size: 1rem;
   }
 
