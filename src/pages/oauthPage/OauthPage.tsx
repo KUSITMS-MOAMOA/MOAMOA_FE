@@ -7,11 +7,11 @@ export const OauthPage = () => {
   };
 
   const handleNaverOauth = () => {
-    window.location.href = 'https://test.moamoa.site/oauth2/authorization/naver';
+    window.location.href = 'https://api.moamoa.site/oauth2/authorization/naver';
   };
 
   const handleGoogleOauth = () => {
-    window.location.href = 'https://test.moamoa.site/oauth2/authorization/google';
+    window.location.href = 'https://api.moamoa.site/oauth2/authorization/google';
   };
 
   return (
