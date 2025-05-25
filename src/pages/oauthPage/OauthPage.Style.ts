@@ -16,7 +16,7 @@ export const Container = styled.div`
 `;
 
 export const Logo = styled.p`
-  font-family: ${props => props.theme.fonts.montserratAlternatesBold};
+  font-family: ${(props) => props.theme.fonts.montserratAlternatesBold};
   font-size: 2rem;
   font-weight: 700;
   top: 17.25rem;
@@ -43,6 +43,7 @@ export const ButtonWrapper = styled.div`
   width: 19.875rem;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   align-items: center;
   justify-content: center;
 `;
