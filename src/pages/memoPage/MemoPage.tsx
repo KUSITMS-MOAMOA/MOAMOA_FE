@@ -50,7 +50,6 @@ export const MemoPage = () => {
   useValidatePathId(isReviewMode);
 
   useEffect(() => {
-    // 폴더 조회
     if (!isBottomSheetOpen) {
       const fetchFolders = async () => {
         const folderList = await getFolders();
@@ -60,10 +59,9 @@ export const MemoPage = () => {
       };
       fetchFolders();
     }
-    // 임시 저장된 메모 조회
+
     const fetchTempMemo = async () => {
       try {
-        // review-memo 경로로 접근한 경우에는 임시저장 확인하지 않음
         if (isReviewMode) return;
 
         const tempMemoData = await getTempMemo();
@@ -80,9 +78,8 @@ export const MemoPage = () => {
         console.error(error);
       }
     };
-    fetchTempMemo(); // 페이지 로드 시 임시 메모 조회
+    fetchTempMemo();
 
-    // 메모 기록 세부 조회
     if (location.state?.memoData) {
       const memoData = location.state.memoData;
       setTempMemo({
@@ -92,7 +89,6 @@ export const MemoPage = () => {
         memo: memoData.content || '',
       });
 
-      // 저장된 폴더 정보 가져오기
       const fetchMemoFolder = async () => {
         try {
           const memoDetails = await getMemo(location.state.memoData.recordId);
@@ -153,7 +149,6 @@ export const MemoPage = () => {
         folderId: newFolder.folderId,
       }));
 
-      // 폴더 목록 즉시 업데이트
       const fetchFolders = async () => {
         const folderList = await getFolders();
         if (folderList) {
@@ -166,7 +161,7 @@ export const MemoPage = () => {
 
   const handleChangeMemo = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newMemo = e.target.value;
-    if (newMemo.length > 500) {
+    if (newMemo.length > 1000) {
       return;
     }
     setTempMemo((prev) => ({ ...prev, memo: newMemo }));
@@ -340,12 +335,12 @@ export const MemoPage = () => {
                   placeholder={`어떤 상황에서 무엇을 했나요? 결과는 어땠나요?\n\n일단 기록해 보세요!\n음성으로 입력하거나 오타를 내도 괜찮아요.\n모아모아가 알아서 정리해드려요.`}
                   value={tempMemo.memo}
                   onChange={handleChangeMemo}
-                  maxLength={500}
+                  maxLength={1000}
                   disabled={isReviewMode}
                 />
                 <S.WarningCountContainer>
                   {contentWarning && <S.Warning>{contentWarning}</S.Warning>}
-                  {!isReviewMode && <S.Count>{tempMemo.memo.length}/500</S.Count>}
+                  {!isReviewMode && <S.Count>{tempMemo.memo.length}/1000</S.Count>}
                 </S.WarningCountContainer>
                 <S.Line />
               </S.ContentWrapper>
